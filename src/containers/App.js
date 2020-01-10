@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 const App = props => {
   const [personsState, setPersonsState] = useState({
@@ -18,7 +19,6 @@ const App = props => {
   }
 
   const deletePersonHandler= (personIndex) => {
-
     const persons = [...personsState.persons]
     persons.splice(personIndex, 1)
     setPersonsState({persons: persons})
@@ -32,37 +32,24 @@ const App = props => {
     setPersonsState({persons: persons})
   }
 
-  const style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  }
+  
 
   let persons = null;
   if(showPersons){
     persons = (
       <div>
-        {personsState.persons.map((person, index)=>{
-          return(<Person
-            key={index}
-            name={person.name}
-            age={person.age}
-            click={()=> deletePersonHandler(index)}
-            changed = {(event)=>nameChangeHandler(event, index)}
-            />)
-        })}
+        <Persons
+          persons = {personsState.persons}
+          clicked = {deletePersonHandler}
+          changed = {nameChangeHandler} 
+        />
       </div>
     )
-    style.backgroundColor = 'red';
   }
 
   return (
       <div className="App">
-        <h1> Im a React Demo App</h1>
-        <button onClick= {swichNameHandler} style={style}>Toggle Persons</button>
+        <Cockpit clicked={swichNameHandler}/>
         {persons}
       </div>
   );
